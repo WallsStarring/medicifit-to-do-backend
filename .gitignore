@@ -1,0 +1,23 @@
+# Logs
+*.log
+
+# Enviornment variables
+.env
+
+# Dependency directories
+/node_modules
+
+# Optional npm cache directory
+.npm
+temp
+
+# Optional REPL history
+.node_repl_history
+*.sql
+.idea
+.vscode
+logs/*
+cache
+*.txt
+*.aof
+data

@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: medicifit
+      POSTGRES_PASSWORD: mY0clhb13SfaHK9
+      POSTGRES_DB: medicifit_todo_list
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_USER: medicifit
+      DB_PASSWORD: mY0clhb13SfaHK9
+      DB_NAME: medicifit_todo_list
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+      -
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+volumes:
+  pg-data:
