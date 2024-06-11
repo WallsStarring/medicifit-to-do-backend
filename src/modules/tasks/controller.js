@@ -1,6 +1,5 @@
 const SERVICES = require('./service');
 const { HELPER } = require('../../helpers');
-
 exports.ADD = async (req, res, next) => {
     try {
         const task = req.body;
@@ -9,6 +8,7 @@ exports.ADD = async (req, res, next) => {
         if (!response.success) {
             return HELPER.errorResponse(res, response.code, response.message, response.data);
         }
+        global.emitEvent('notification', { message: 'Task successfully created' });
         return HELPER.successResponse(res, response.code, response.message, response.data);
     } catch (error) {
         next(error);

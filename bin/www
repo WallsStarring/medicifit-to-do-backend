@@ -8,6 +8,7 @@ const http = require('http');
 const { CONSTANTS } = require('../src/config');
 const { logger } = require('../src/utils');
 const app = require('../app');
+const configureSocket = require('../src/utils/socket');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -15,14 +16,11 @@ const app = require('../app');
 function normalizePort(val) {
     const port = parseInt(val, 10);
 
-    // eslint-disable-next-line no-restricted-globals
     if (isNaN(port)) {
-        // named pipe
         return val;
     }
 
     if (port >= 0) {
-        // port number
         return port;
     }
 
@@ -40,6 +38,10 @@ app.set('port', port);
  */
 const server = http.createServer(app);
 
+const io = configureSocket(server);
+global.emitEvent = function emitEvent(event, data) {
+    io.emit(event, data);
+}
 function onError(error) {
     if (error.syscall !== 'listen') {
         throw error;
@@ -47,7 +49,6 @@ function onError(error) {
 
     const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
 
-    // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
             logger.error({
