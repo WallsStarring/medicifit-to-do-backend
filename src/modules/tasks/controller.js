@@ -8,7 +8,7 @@ exports.ADD = async (req, res, next) => {
         if (!response.success) {
             return HELPER.errorResponse(res, response.code, response.message, response.data);
         }
-        global.emitEvent('notification', { message: 'Task successfully created' });
+        global.emitEvent('notification', { message: 'a new task was created' });
         return HELPER.successResponse(res, response.code, response.message, response.data);
     } catch (error) {
         next(error);
