@@ -38,3 +38,10 @@ npm run start
 ```bash
 docker compose up -d
 ```
+<note>
+<p>Si se usa docker</p> 
+<p>
+El host de la base de datos debe de ser reemplazado por
+DB_HOST=db
+</p>
+</note>
