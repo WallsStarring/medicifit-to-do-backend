@@ -13,21 +13,16 @@ services:
       - pg-data:/var/lib/postgresql/data
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
-      - "3000:3000"
+      - "3005:3005"
+    volumes:
+      - .:/app
+      - /app/node_modules
     environment:
-      DB_HOST: db
-      DB_USER: medicifit
-      DB_PASSWORD: mY0clhb13SfaHK9
-      DB_NAME: medicifit_todo_list
+      - NODE_ENV=development
     depends_on:
       - db
-    volumes:
-      - .:/usr/src/app
-      -
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin

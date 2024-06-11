@@ -1,17 +1,12 @@
-FROM node:20 as trasnpiledApi
+FROM node:lts
+
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package.json /usr/src/app/
 RUN npm install
+COPY . /usr/src/app
 
-COPY . .
+CMD [ "npm", "start" ]
 
-# Deploy
-#FROM node:20
-#WORKDIR /usr/src/app
-#
-#COPY package*.json ./
-#RUN npm install --production
-
-EXPOSE 3000
-CMD ["node", "app.js"]
+EXPOSE 3005
